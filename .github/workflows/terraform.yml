@@ -1,0 +1,27 @@
+name: Terraform Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  terraform:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Configure GCP Credentials
+        run: echo "${{ secrets.GCP_CREDENTIALS }}" > gcp-key.json
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -var="credentials_file=gcp-key.json" -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}"
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -var="credentials_file=gcp-key.json" -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}"
