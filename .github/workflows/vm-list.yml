@@ -1,0 +1,22 @@
+name: List GCP VMs
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  list-vms:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure GCP Credentials
+        run: |
+          echo '${{ secrets.GCP_CREDENTIALS }}' > gcp-key.json
+          gcloud auth activate-service-account --key-file=gcp-key.json
+          gcloud config set project secure-theme-489603-d9
+          gcloud config set compute/region us-central1
+
+      - name: List VMs
+        run: gcloud compute instances list --format="table(name,zone,machineType,status)"
