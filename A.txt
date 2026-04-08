@@ -1,2 +1,0 @@
-this is an sample file
-this is anoter line after creatting the fetature branch
