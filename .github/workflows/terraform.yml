@@ -22,13 +22,7 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan \
-          -var="credentials_file=gcp-key.json" \
-          -var="project_id=${{ secrets.PROJECT_ID }}" \
-          -var="region=${{ secrets.REGION }}"
+        run: terraform plan -var="credentials_file=gcp-key.json" -var="project_id=secure-theme-489603-d9" -var="region=us-central1"
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve \
-          -var="credentials_file=gcp-key.json" \
-          -var="project_id=${{ secrets.PROJECT_ID }}" \
-          -var="region=${{ secrets.REGION }}"
+        run: terraform apply -auto-approve -var="credentials_file=gcp-key.json" -var="project_id=secure-theme-489603-d9" -var="region=us-central1"
