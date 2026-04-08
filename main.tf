@@ -4,7 +4,7 @@ provider "google" {
   region      = var.region
 }
 
-resource "google_storage_bucket" "example" {
+resource "google_storage_bucket" "example1" {
   name     = "${var.project_id}-bucket"
   location = var.region
 }
